@@ -8,6 +8,9 @@ namespace StringUtil
     static class StringProcessingUtil
     {
         public static int Len(string val)
+            ///<summary>
+            ///   Returns the length of the string.
+            ///</summary>
         {
             int counter = 0;
             foreach (byte b in val)
@@ -18,6 +21,9 @@ namespace StringUtil
         }
         
         public static bool HasUpperCase(string val)
+        ///<summary>
+        ///   Determines whether the string contains uppercase letters.
+        ///</summary>
         {
             foreach (char c in val)
             {
@@ -31,6 +37,9 @@ namespace StringUtil
         }
 
         public static bool HasNumbers(string val)
+        ///<summary>
+        ///   Determines whether the string contains numbers.
+        ///</summary>
         {
             foreach (char c in val)
             {
@@ -44,6 +53,9 @@ namespace StringUtil
         }
 
         public static bool HasSpecialChars(string val)
+        ///<summary>
+        ///   Determines whether the string contains special characters.
+        ///</summary>
         {
             foreach (char c in val)
             {
@@ -57,6 +69,9 @@ namespace StringUtil
         }
 
         public static int CountUpperCase(string val)
+        ///<summary>
+        ///   Returns the number of uppercase characters in the string.
+        ///</summary>
         {
             int counter = 0;
             foreach (char c in val)
@@ -70,6 +85,9 @@ namespace StringUtil
         }
 
         public static int CountNumbers(string val)
+        ///<summary>
+        ///   Returns the number of numbers in the string.
+        ///</summary>
         {
             int counter = 0;
             foreach (char c in val)
@@ -83,6 +101,9 @@ namespace StringUtil
         }
 
         public static int CountSpecialChars(string val)
+        ///<summary>
+        ///   Returns the number of special characters in the string.
+        ///</summary>
         {
             int counter = 0;
             foreach (char c in val)
@@ -96,17 +117,62 @@ namespace StringUtil
         }
 
         public static char GetRandomChar(string s)
+        ///<summary>
+        ///   Returns a random character from the entire string.
+        ///</summary>
         {
             Random rand = new Random();
             int rnd = rand.Next(0, Len(s));
-            int counter = 0;
+            int index = 0;
             foreach (char c in s)
             {
-                if (counter == rnd)
+                if (index == rnd)
                 {
                     return c;
                 }
-                counter++;
+                index++;
+            }
+            return 'F';
+        }
+
+        public static char GetRandomChar(string s, int startIndex)
+        {
+            ///<summary>
+            ///   Returns a random character from the string,
+            ///   starting at the specified start-index, and
+            ///   going to the end.
+            ///</summary>
+            Random rand = new Random();
+            int rnd = rand.Next(startIndex, Len(s));
+            int index = 0;
+            foreach (char c in s)
+            {
+                if (index == rnd)
+                {
+                    return c;
+                }
+                index++;
+            }
+            return 'F';
+        }
+
+        public static char GetRandomChar(string s, int startIndex, int endIndex)
+        {
+            ///<summary>
+            ///   Returns a random character from the string, starting at
+            ///   the specified start-index, and ending at the specified
+            ///   end-index.
+            ///</summary>
+            Random rand = new Random();
+            int rnd = rand.Next(startIndex, endIndex);
+            int index = 0;
+            foreach (char c in s)
+            {
+                if (index == rnd)
+                {
+                    return c;
+                }
+                index++;
             }
             return 'F';
         }
