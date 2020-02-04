@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StringUtil
 {
@@ -8,10 +9,13 @@ namespace StringUtil
     /// </summary>
     static class StringProcessingUtil
     {
+
+        public static readonly int SPACE = 32;
+
         public static int Len(string val)
-            ///<summary>
-            ///   Returns the length of the string.
-            ///</summary>
+        ///<summary>
+        ///   Returns the length of the string.
+        ///</summary>
         {
             int counter = 0;
             foreach (byte b in val)
@@ -20,7 +24,7 @@ namespace StringUtil
             }
             return counter;
         }
-        
+
         public static bool HasUpperCase(string val)
         ///<summary>
         ///   Determines whether the string contains uppercase letters.
@@ -28,13 +32,15 @@ namespace StringUtil
         {
             foreach (char c in val)
             {
-                int ascii = Convert.ToInt32(c);
-                if (ascii >= 65 && ascii <= 90)
-                {
-                    return true;
-                }
+                HasUpperCase(c);
             }
             return false;
+        }
+
+        public static bool HasUpperCase(char c)
+        {
+            int ascii = Convert.ToInt32(c);
+            return (ascii >= 65 && ascii <= 90);
         }
 
         public static bool HasNumbers(string val)
@@ -61,7 +67,7 @@ namespace StringUtil
             foreach (char c in val)
             {
                 int ascii = Convert.ToInt32(c);
-                if ((ascii >= 32 && ascii <= 47) || (ascii >= 58 && ascii <=64) || (ascii >= 91 && ascii <= 96) || (ascii >= 123 && ascii <= 126))
+                if ((ascii >= SPACE && ascii <= 47) || (ascii >= 58 && ascii <= 64) || (ascii >= 91 && ascii <= 96) || (ascii >= 123 && ascii <= 126))
                 {
                     return true;
                 }
@@ -74,15 +80,22 @@ namespace StringUtil
         ///   Returns the number of uppercase characters in the string.
         ///</summary>
         {
+            // this is equivalent:
+            // int count = val.ToCharArray().Count(c => HasUpperCase(c.ToString()));
             int counter = 0;
             foreach (char c in val)
             {
-                if (HasUpperCase(c.ToString()))
+                if (HasUpperCase(c))
                 {
                     counter++;
                 }
             }
             return counter;
+        }
+
+        public static int CountAny(string val, Func<char, bool> predicate)
+        {
+            return val.ToCharArray().Count(predicate);
         }
 
         public static int CountNumbers(string val)
@@ -90,15 +103,7 @@ namespace StringUtil
         ///   Returns the number of numbers in the string.
         ///</summary>
         {
-            int counter = 0;
-            foreach (char c in val)
-            {
-                if (HasNumbers(c.ToString()))
-                {
-                    counter++;
-                }
-            }
-            return counter;
+            return CountAny(val, (c) => HasNumbers(c.ToString()));
         }
 
         public static int CountSpecialChars(string val)
@@ -106,15 +111,7 @@ namespace StringUtil
         ///   Returns the number of special characters in the string.
         ///</summary>
         {
-            int counter = 0;
-            foreach (char c in val)
-            {
-                if (HasSpecialChars(c.ToString()))
-                {
-                    counter++;
-                }
-            }
-            return counter;
+            return CountAny(val, (c) => HasSpecialChars(c.ToString()));
         }
 
         public static char GetRandomChar(string s)
@@ -134,7 +131,7 @@ namespace StringUtil
                 index++;
             }
             return 'F';
-        } 
+        }
 
         public static char GetRandomChar(string s, int startIndex)
         ///<summary>
@@ -166,16 +163,12 @@ namespace StringUtil
         {
             Random rand = new Random();
             int rnd = rand.Next(startIndex, endIndex);
-            int index = 0;
-            foreach (char c in s)
+            if (rnd < 0 || rnd > s.Length)
             {
-                if (index == rnd)
-                {
-                    return c;
-                }
-                index++;
+                Console.Error.WriteLine("Nel egyékl már fastz!");
+                throw new PEBCACException("Túl nagy az index te majom!");
             }
-            return 'F';
+            return s.ToCharArray()[rnd];
         }
 
         public static string GenerateRandom(int strLen)
