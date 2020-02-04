@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace StringUtil
 {
@@ -133,15 +134,15 @@ namespace StringUtil
                 index++;
             }
             return 'F';
-        }
+        } 
 
         public static char GetRandomChar(string s, int startIndex)
+        ///<summary>
+        ///   Returns a random character from the string,
+        ///   starting at the specified start-index, and
+        ///   going to the end.
+        ///</summary>
         {
-            ///<summary>
-            ///   Returns a random character from the string,
-            ///   starting at the specified start-index, and
-            ///   going to the end.
-            ///</summary>
             Random rand = new Random();
             int rnd = rand.Next(startIndex, Len(s));
             int index = 0;
@@ -157,12 +158,12 @@ namespace StringUtil
         }
 
         public static char GetRandomChar(string s, int startIndex, int endIndex)
+        ///<summary>
+        ///   Returns a random character from the string, starting at
+        ///   the specified start-index, and ending at the specified
+        ///   end-index.
+        ///</summary>
         {
-            ///<summary>
-            ///   Returns a random character from the string, starting at
-            ///   the specified start-index, and ending at the specified
-            ///   end-index.
-            ///</summary>
             Random rand = new Random();
             int rnd = rand.Next(startIndex, endIndex);
             int index = 0;
@@ -175,6 +176,37 @@ namespace StringUtil
                 index++;
             }
             return 'F';
+        }
+
+        public static string GenerateRandom(int strLen)
+        {
+            ///<summary>
+            ///   Returns a fully random string, with the specified length.
+            ///</summary>
+            Random rand = new Random();
+            string generated = "";
+            for (int i = 0; i < strLen; i++)
+            {
+                int rnd = rand.Next(33, 126);
+                generated += Convert.ToChar(rnd);
+            }
+            return generated;
+        }
+
+        public static string GenerateRandom(int strLen, int minAscii, int maxAscii)
+        {
+            ///<summary>
+            ///   Returns a random string, with the specified length, and
+            ///   between the specified prefix of ASCII values.
+            ///</summary>
+            Random rand = new Random();
+            string generated = "";
+            for (int i = 0; i < strLen; i++)
+            {
+                int rnd = rand.Next(minAscii, maxAscii);
+                generated += Convert.ToChar(rnd);
+            }
+            return generated;
         }
     }
 }

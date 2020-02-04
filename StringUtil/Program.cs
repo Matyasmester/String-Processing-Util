@@ -18,6 +18,8 @@ namespace StringUtil
             Console.WriteLine("Random char from string: {0}", GetRandomChar(Str));
             Console.WriteLine("Random char from string (Overload 1): {0}", GetRandomChar(Str, 15));
             Console.WriteLine("Random char from string (Overload 2): {0}", GetRandomChar(Str, 0, 3));
+            Console.WriteLine("Random string with 10 length: {0}", GenerateRandom(10));
+            Console.WriteLine("Random string with 10 length and ASCII values between 50 and 100: {0}", GenerateRandom(10, 50, 100));
             Console.Read();
         }
     }
